@@ -1,0 +1,377 @@
+/* Supporting styles for the planning companion. Kept separate from the core UI. */
+.workspace-grid {
+  display:grid;
+  grid-template-columns:minmax(0,1fr) 275px;
+  gap:18px;
+  align-items:start;
+}
+
+.insights-panel {
+  display:grid;
+  gap:14px;
+}
+
+.insight-card {
+  border:1px solid #edf0f5;
+  border-radius:15px;
+  padding:18px;
+  background:var(--paper);
+  box-shadow:0 5px 20px rgba(30,47,79,.025);
+}
+
+.insight-card .eyebrow {
+  margin-bottom:11px;
+}
+
+.focus-card {
+  overflow:hidden;
+  background:linear-gradient(135deg,#e9edff 0%,#f6f2ff 100%);
+}
+
+.focus-score {
+  display:flex;
+  align-items:baseline;
+  gap:5px;
+}
+
+.focus-score strong {
+  color:#243455;
+  font:600 40px/1 Fraunces,serif;
+  letter-spacing:-2px;
+}
+
+.focus-score span {
+  color:#7f8ba2;
+  font-size:12px;
+  font-weight:600;
+}
+
+.focus-card > p:not(.eyebrow) {
+  min-height:34px;
+  margin:9px 0 13px;
+  color:#65728b;
+  font-size:12px;
+  line-height:1.45;
+}
+
+.progress-track {
+  width:100%;
+  height:6px;
+  overflow:hidden;
+  border-radius:20px;
+  background:rgba(52,74,121,.12);
+}
+
+.progress-track i {
+  display:block;
+  width:0;
+  height:100%;
+  border-radius:inherit;
+  background:linear-gradient(90deg,#687cf0,#9c7cdb);
+  transition:width .4s ease;
+}
+
+.insight-heading {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:8px;
+  margin-bottom:13px;
+}
+
+.insight-heading h2 {
+  margin:0;
+  color:var(--ink);
+  font:600 16px Fraunces,serif;
+  letter-spacing:-.3px;
+}
+
+.insight-heading > span {
+  color:#9ba5b5;
+  font-size:10px;
+  font-weight:700;
+  letter-spacing:.8px;
+  text-transform:uppercase;
+}
+
+.upcoming-list {
+  display:grid;
+}
+
+.upcoming-row {
+  display:grid;
+  grid-template-columns:7px minmax(0,1fr) auto;
+  align-items:center;
+  gap:8px;
+  padding:10px 0;
+  border-top:1px solid #eff1f5;
+}
+
+.upcoming-row:first-child {
+  border-top:0;
+  padding-top:0;
+}
+
+.upcoming-row:last-child {
+  padding-bottom:0;
+}
+
+.priority-dot {
+  width:6px;
+  height:6px;
+  border-radius:50%;
+  background:#d1d6e0;
+}
+
+.priority-dot.high {
+  background:#ef806c;
+}
+
+.priority-dot.medium {
+  background:#dbb54f;
+}
+
+.priority-dot.low {
+  background:#72b99b;
+}
+
+.upcoming-row div {
+  display:grid;
+  min-width:0;
+  gap:2px;
+}
+
+.upcoming-row strong {
+  overflow:hidden;
+  color:#425069;
+  font-size:11px;
+  font-weight:700;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+
+.upcoming-row span {
+  overflow:hidden;
+  color:#9ca5b5;
+  font-size:10px;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+
+.upcoming-row time {
+  color:#8490a2;
+  font-size:10px;
+  font-weight:600;
+  white-space:nowrap;
+}
+
+.upcoming-row time.today {
+  color:#cc6955;
+}
+
+.upcoming-row time.late {
+  color:#d2534b;
+}
+
+.side-empty {
+  margin:1px 0;
+  color:#929bad;
+  font-size:11px;
+  line-height:1.5;
+}
+
+.activity-list {
+  display:grid;
+  gap:11px;
+}
+
+.activity-row {
+  display:flex;
+  align-items:flex-start;
+  gap:8px;
+}
+
+.activity-icon {
+  display:grid;
+  width:18px;
+  height:18px;
+  flex:0 0 18px;
+  place-items:center;
+  border-radius:6px;
+  color:#79869b;
+  background:#eef1f5;
+  font-size:12px;
+  font-weight:700;
+}
+
+.activity-icon.created {
+  color:#628d7c;
+  background:#e5f5ed;
+}
+
+.activity-icon.completed {
+  color:#5f987f;
+  background:#e4f4eb;
+}
+
+.activity-icon.deleted {
+  color:#c56b62;
+  background:#fcebe8;
+}
+
+.activity-row p {
+  display:grid;
+  gap:2px;
+  min-width:0;
+  margin:0;
+  color:#768195;
+  font-size:10px;
+  line-height:1.25;
+}
+
+.activity-row p strong {
+  color:#4e5c74;
+  font-weight:700;
+}
+
+.activity-row small {
+  overflow:hidden;
+  color:#a0a9b8;
+  font-size:9px;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+
+.refresh-activity {
+  width:22px;
+  height:22px;
+  border:0;
+  border-radius:6px;
+  color:#8490a1;
+  background:#f5f6f9;
+  line-height:1;
+}
+
+.refresh-activity:hover:not(:disabled) {
+  color:#4d5a70;
+  background:#eceff4;
+}
+
+.refresh-activity:disabled {
+  opacity:.5;
+  cursor:wait;
+}
+
+.data-card {
+  background:#fcfbf6;
+}
+
+.data-card > p {
+  margin:0 0 12px;
+  color:#8892a2;
+  font-size:11px;
+  line-height:1.45;
+}
+
+.data-actions {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:7px;
+}
+
+.data-actions button {
+  border:1px solid #e8e6d9;
+  border-radius:7px;
+  padding:8px 5px;
+  color:#68738a;
+  background:white;
+  font-size:10px;
+  font-weight:700;
+}
+
+.data-actions button:hover:not(:disabled) {
+  color:#3e4b62;
+  border-color:#d8d4bf;
+  background:#fffef9;
+}
+
+.data-actions button:disabled {
+  color:#aab0bb;
+  cursor:wait;
+}
+
+.dark .insight-card {
+  border-color:#303d55;
+  background:#19253a;
+}
+
+.dark .focus-card {
+  background:linear-gradient(135deg,#273453 0%,#30294b 100%);
+}
+
+.dark .focus-score strong {
+  color:#e3e9fd;
+}
+
+.dark .focus-card > p:not(.eyebrow) {
+  color:#b7c2d5;
+}
+
+.dark .progress-track {
+  background:rgba(223,232,255,.16);
+}
+
+.dark .upcoming-row {
+  border-color:#2e3a51;
+}
+
+.dark .upcoming-row strong,
+.dark .activity-row p strong {
+  color:#dbe3f2;
+}
+
+.dark .data-card {
+  background:#202d43;
+}
+
+.dark .data-actions button,
+.dark .refresh-activity {
+  border-color:#35425b;
+  color:#bdc7d8;
+  background:#243148;
+}
+
+@media (max-width:1080px) {
+  .workspace-grid {
+    grid-template-columns:1fr;
+  }
+
+  .insights-panel {
+    grid-template-columns:repeat(3,1fr);
+  }
+
+  .focus-card,
+  .data-card {
+    grid-column:auto;
+  }
+}
+
+@media (max-width:760px) {
+  .insights-panel {
+    grid-template-columns:1fr 1fr;
+  }
+
+  .data-card {
+    grid-column:span 2;
+  }
+}
+
+@media (max-width:440px) {
+  .insights-panel {
+    grid-template-columns:1fr;
+  }
+
+  .data-card {
+    grid-column:auto;
+  }
+}

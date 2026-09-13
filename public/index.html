@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0f172a">
+  <title>Guide — Project To-Do</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="insights.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" aria-label="Main navigation">
+      <a class="brand" href="#top"><span class="brand-mark">✓</span><span>guide<span class="brand-dot">.</span></span></a>
+      <button class="create-button" id="newTaskButton"><span>＋</span> New task <kbd>N</kbd></button>
+      <nav class="navigation">
+        <p class="nav-heading">Overview</p>
+        <button class="nav-item is-active" data-view="all"><span class="nav-icon">▦</span> All tasks <b id="allCount">0</b></button>
+        <button class="nav-item" data-view="today"><span class="nav-icon">☀</span> Today <b id="todayCount">0</b></button>
+        <button class="nav-item" data-view="upcoming"><span class="nav-icon">◷</span> Upcoming</button>
+        <button class="nav-item" data-view="completed"><span class="nav-icon">✓</span> Completed</button>
+      </nav>
+      <section class="projects"><div class="section-row"><p class="nav-heading">Projects</p><button class="plain-button" id="quickProject" aria-label="Add a project">＋</button></div><div id="projectList"></div></section>
+      <div class="sidebar-footer"><div class="avatar">JG</div><div><strong>Jamie Guide</strong><span>Personal workspace</span></div><button class="plain-button">⋮</button></div>
+    </aside>
+
+    <main id="top" class="main-content">
+      <header class="topbar"><button class="mobile-menu" id="mobileMenu" aria-label="Open menu">☰</button><div class="breadcrumb"><span>My workspace</span><i>/</i><strong id="breadcrumb">All tasks</strong></div><div class="top-actions"><button class="icon-button" id="themeToggle" aria-label="Toggle theme">◐</button><button class="help-button">?</button></div></header>
+      <div class="page-content">
+        <section class="intro"><div><p class="eyebrow" id="dateLabel"></p><h1 id="viewTitle">Make today count.</h1><p class="subtitle" id="viewSubtitle">A little progress adds up. Here’s what needs your attention.</p></div><button class="add-task-inline" id="addTaskTop">＋ Add task</button></section>
+        <section class="stat-grid" aria-label="Task summary"><article class="stat-card navy"><span>Active tasks</span><strong id="activeStat">0</strong><small id="activeNote">Stay in motion</small></article><article class="stat-card peach"><span>Due today</span><strong id="todayStat">0</strong><small>Clear the runway</small></article><article class="stat-card mint"><span>Completed</span><strong id="completedStat">0</strong><small>Worth celebrating</small></article><article class="stat-card lavender"><span>Overdue</span><strong id="overdueStat">0</strong><small>Bring these forward</small></article></section>
+        <section class="workspace-grid">
+          <section class="task-section"><div class="section-header"><div><h2 id="listHeading">All tasks</h2><p id="listDescription">Everything you’re working on, in one quiet place.</p></div><div class="list-tools"><label class="search-wrap"><span>⌕</span><input id="searchInput" type="search" placeholder="Search tasks" aria-label="Search tasks"></label><button class="filter-button" id="filterButton">☷ Filter</button></div></div><div class="filter-panel" id="filterPanel" hidden><label>Priority<select id="priorityFilter"><option value="">Any priority</option><option value="high">High</option><option value="medium">Medium</option><option value="low">Low</option></select></label><label>Sort<select id="sortSelect"><option value="smart">Smart order</option><option value="due">Due date</option><option value="priority">Priority</option><option value="newest">Newest</option></select></label><button class="clear-filter" id="clearFilters">Clear filters</button></div><div id="taskList" class="task-list" aria-live="polite"></div><div class="empty-state" id="emptyState" hidden><div class="empty-illustration">✦</div><h3>Nothing here yet</h3><p>Give yourself a clear next step. Add a task to begin.</p><button class="add-task-inline" id="addEmpty">＋ Add your first task</button></div></section>
+          <aside class="insights-panel" aria-label="Planning insights">
+            <section class="insight-card focus-card"><p class="eyebrow">FOCUS PULSE</p><div class="focus-score"><strong id="focusScore">0</strong><span>/ 100</span></div><p id="focusMessage">Loading your task balance…</p><div class="progress-track"><i id="focusProgress"></i></div></section>
+            <section class="insight-card"><div class="insight-heading"><h2>Next up</h2><span>7 days</span></div><div id="upcomingList" class="upcoming-list"></div></section>
+            <section class="insight-card"><div class="insight-heading"><h2>Recent activity</h2><button class="refresh-activity" id="refreshActivity">↻</button></div><div id="activityList" class="activity-list"></div></section>
+            <section class="insight-card data-card"><div class="insight-heading"><h2>Your data</h2><span>Portable</span></div><p>Download a backup whenever you need it.</p><div class="data-actions"><button id="exportJson">Export JSON</button><button id="exportCsv">Export CSV</button></div></section>
+          </aside>
+        </section>
+      </div>
+    </main>
+  </div>
+  <div class="modal-backdrop" id="modalBackdrop" hidden></div>
+  <dialog class="task-modal" id="taskModal"><form id="taskForm" method="dialog"><div class="modal-header"><div><p class="eyebrow" id="modalEyebrow">NEW TASK</p><h2 id="modalTitle">Add a task</h2></div><button type="button" class="close-button" id="closeModal" aria-label="Close">×</button></div><input type="hidden" id="taskId"><label class="form-label">Task title<input id="taskTitle" name="title" maxlength="120" required placeholder="What needs to get done?" autocomplete="off"></label><div class="form-grid"><label class="form-label">Project<input id="taskProject" list="projectOptions" maxlength="48" placeholder="Inbox"><datalist id="projectOptions"></datalist></label><label class="form-label">Due date<input id="taskDueDate" type="date"></label></div><div class="form-grid"><label class="form-label">Priority<select id="taskPriority"><option value="medium">Medium</option><option value="high">High</option><option value="low">Low</option></select></label><label class="form-label check-label"><input id="taskCompleted" type="checkbox"><span>Already complete</span></label></div><label class="form-label">Notes <span class="optional">optional</span><textarea id="taskNotes" maxlength="1000" rows="4" placeholder="Add a little context…"></textarea></label><div class="modal-actions"><button type="button" class="delete-button" id="deleteTask" hidden>Delete task</button><span></span><button type="button" class="secondary-button" id="cancelModal">Cancel</button><button class="save-button" id="saveTask">Save task</button></div></form></dialog>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="app.js"></script>
+  <script src="insights.js"></script>
+</body>
+</html>
