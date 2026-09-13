@@ -13,6 +13,8 @@ Visit `http://localhost:3000`. The app creates `data/tasks.json` automatically o
 ## API
 
 - `GET /api/tasks` — list tasks (`?project=Work&status=active&q=design` supported)
+- `GET /api/tasks/:id` — return one task by ID
+- `GET /api/due` — list active tasks with due dates (`?date=YYYY-MM-DD` supported)
 - `POST /api/tasks` — create a task
 - `PATCH /api/tasks/:id` — edit a task
 - `DELETE /api/tasks/:id` — delete a task

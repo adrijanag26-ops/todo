@@ -199,7 +199,18 @@ async function handleApi(req, res, url) {
   const parts = url.pathname.split('/').filter(Boolean);
   const resource = parts[1];
   const id = parts[2];
+  if (resource === 'tasks' && req.method === 'GET' && id) {
+    const task = (await readTasks()).find((entry) => entry.id === id);
+    if (!task) return error(res, 404, 'Task not found.');
+    return json(res, 200, { task });
+  }
   if (resource === 'tasks' && req.method === 'GET' && !id) return json(res, 200, { tasks: visibleTasks(await readTasks(), url.searchParams) });
+  if (resource === 'due' && req.method === 'GET') {
+    const date = url.searchParams.get('date');
+    if (date && !/^\d{4}-\d{2}-\d{2}$/.test(date)) return error(res, 400, 'Date must use YYYY-MM-DD.');
+    const tasks = (await readTasks()).filter((task) => !task.completed && task.dueDate && (!date || task.dueDate === date));
+    return json(res, 200, { date: date || null, tasks: visibleTasks(tasks, new URLSearchParams()) });
+  }
   if (resource === 'projects' && req.method === 'GET') {
     const tasks = await readTasks();
     const projects = [...new Set(tasks.map((task) => task.project))].sort().map((name) => ({
