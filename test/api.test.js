@@ -68,6 +68,28 @@ test('initializes the dashboard with demonstration tasks', async () => {
   assert.equal(data.tasks.every((task) => typeof task.id === 'string'), true);
 });
 
+test('returns one task by id and a due-task agenda', async () => {
+  const listResponse = await request('/api/tasks');
+  const task = (await listResponse.json()).tasks[0];
+  const detailResponse = await request(`/api/tasks/${task.id}`);
+  const detail = await detailResponse.json();
+  assert.equal(detailResponse.status, 200);
+  assert.equal(detail.task.id, task.id);
+
+  const dueResponse = await request(`/api/due?date=${task.dueDate}`);
+  const due = await dueResponse.json();
+  assert.equal(dueResponse.status, 200);
+  assert.equal(due.date, task.dueDate);
+  assert.equal(due.tasks.some((entry) => entry.id === task.id), true);
+});
+
+test('validates new route parameters and missing task ids', async () => {
+  const missing = await request('/api/tasks/not-a-real-id');
+  const invalidDate = await request('/api/due?date=tomorrow');
+  assert.equal(missing.status, 404);
+  assert.equal(invalidDate.status, 400);
+});
+
 test('creates a complete new task', async () => {
   const response = await request('/api/tasks', {
     method: 'POST',
